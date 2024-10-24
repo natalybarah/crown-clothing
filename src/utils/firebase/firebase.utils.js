@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app"
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 //we are able to create google signin wih these:
-import{getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import{getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
 
 
@@ -25,15 +25,17 @@ const firebaseApp = initializeApp(firebaseConfig);
 //in order to use google authentication, we need to initialize a provider
 //using this google auth provider class that we received
 
-const provider= new GoogleAuthProvider();
+const googleProvider= new GoogleAuthProvider();
 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
     prompt: 'select_account'
 })// how we want this googleAuthProvider to behave! which means everytime somone interatcs with our provider,
 //we want to force the person to select an account. this is specific to google interface, config that google wants.
 
 export const auth= getAuth();
-export const signInWithGooglePopup= ()=>signInWithPopup(auth, provider);
+export const signInWithGooglePopup= ()=>signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect= ()=> signInWithRedirect(auth, googleProvider);
+
 
 //Initialize firestore and instantiate
 export const db= getFirestore(); //now that we have instantiated it we can use it in order to access our database
@@ -41,7 +43,9 @@ export const db= getFirestore(); //now that we have instantiated it we can use i
 
 //What we want is to get the data from authentication and store that inside of our firestore
 
-export const createUserDocumentFromAuth= async(userAuth)=>{
+export const createUserDocumentFromAuth= async(userAuth, additionalInformation={})=>{
+  if(!userAuth) return;
+
   const userDocRef= doc(db, 'users', userAuth.uid);
   console.log(userDocRef)
 
@@ -57,7 +61,8 @@ export const createUserDocumentFromAuth= async(userAuth)=>{
         await setDoc(userDocRef, {
           displayName,
           email,
-          createdAt
+          createdAt,
+          ...additionalInformation, //because you don't receive the displayName from the userauth /user object, but rather from the form. 
         })
       }catch(error){
         console.log('There was an error creating the user', error.message)
@@ -65,8 +70,14 @@ export const createUserDocumentFromAuth= async(userAuth)=>{
       }
   }
   return userDocRef;
+}
 
 
+export const createAuthUserWithEmailAndPassword= async(email, password)=>{
+  if(!email || !password) return;
+
+  return await createUserWithEmailAndPassword(auth, email, password);
+  //algo para poder crear el documento de referencia 
 
 }
 
