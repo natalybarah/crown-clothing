@@ -81,6 +81,14 @@ export const createAuthUserWithEmailAndPassword= async(email, password)=>{
 
 }
 
+export const signInAuthUserWithEmailAndPassword= async(email, password)=>{
+  if(!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
+ 
+
+}
+
 
 // if user data does not exist 
 // create / set the document with the data from userAuth in my collection
