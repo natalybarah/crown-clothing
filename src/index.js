@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
-import App from './App';
 import Home from './routes/home/home.component'
 import Navigation from './routes/navigation/navigation.component'
 import Authentication from './routes/authentication/authentication.component'
+import {UserProvider} from './contexts/user.context';
 
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
-  Outlet
 } from "react-router-dom";
 
 
@@ -44,8 +43,11 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+
   <React.StrictMode>
-     <RouterProvider router={router} />
+      <UserProvider>
+       <RouterProvider router={router} />
+     </UserProvider>
   </React.StrictMode>
 );
 

@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app"
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 //we are able to create google signin wih these:
-import{getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import{getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
 import { getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
 
 
@@ -83,9 +83,7 @@ export const createAuthUserWithEmailAndPassword= async(email, password)=>{
 
 export const signInAuthUserWithEmailAndPassword= async(email, password)=>{
   if(!email || !password) return;
-
   return await signInWithEmailAndPassword(auth, email, password);
- 
 
 }
 
@@ -95,3 +93,14 @@ export const signInAuthUserWithEmailAndPassword= async(email, password)=>{
 
 // if user data exists 
 //return userDocRef
+
+export const signOutUser = async () => {
+  //if user is signed in, then sign ougt
+  //if user clicks sign out then sign out
+  await signOut(auth);
+
+}
+
+export const onAuthStateChangedListener= (callback) =>{
+  onAuthStateChanged(auth, callback)
+}

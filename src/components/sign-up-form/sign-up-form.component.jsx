@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { createAuthUserWithEmailAndPassword, auth, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from '../form-input/form-input.component'
 import '../sign-up-form/sign-up-form.styles.scss';
 import Button from '../button/button.component';
-import SignInForm from "../sign-in-form/sign-in-form.component";
+// import {UserContext} from '../../contexts/user.context';
 
 const defaultFormFields={
     displayName: '',
@@ -15,7 +15,9 @@ const SignUpForm= ()=>{
 
     const [formFields, setFormFields]= useState(defaultFormFields);
     const {displayName, email, password, confirmPassword}= formFields;
-    console.log(formFields);
+    //console.log(formFields);
+    console.log('hit');
+    //const {setCurrentUser}= useContext(UserContext);
 
 //we are generating a user document inside of an external service, and because
 //we are going to trigger on this onSubmitevent handler , we are going to get an event
@@ -58,8 +60,13 @@ const SignUpForm= ()=>{
         try {
             const {user}= await createAuthUserWithEmailAndPassword(email, password);
             console.log(user); 
+            
+            /* So now, when I have a user sign up (a new user), I am also going to have
+            this set User in my userContext. */
+           // setCurrentUser(user);
             await createUserDocumentFromAuth(user, {displayName});
             resetFormFields();
+            
         } catch(error){
             if(error.code === 'auth/email-already-in-use') {
                 alert(`Oops, you can't Sign in. This email is already in use.`)

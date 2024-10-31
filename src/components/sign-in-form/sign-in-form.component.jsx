@@ -1,8 +1,9 @@
-import { useState } from "react";
-import {createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
+import { useState} from "react";
+import {signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
 import FormInput from '../form-input/form-input.component'
 import '../sign-in-form/sign-in-form.styles.scss';
 import Button from '../button/button.component';
+//import {UserContext} from '../../contexts/user.context';
 
 
 const defaultFormFields={
@@ -13,17 +14,23 @@ const SignInForm= ()=>{
 
     const [formFields, setFormFields]= useState(defaultFormFields);
     const {email, password}= formFields;
-    console.log(formFields);
+    //  console.log(formFields);
+    
+    /*  
+        We get rid of this set current user because we don't need it anymore, as we use the on auth state listener to 
+        centralize everything in user context
+        const {setCurrentUser} = useContext(UserContext)
+    */
 
     const resetFormFields=()=>{
         setFormFields(defaultFormFields);
     }
-
+    
     const handleSubmit= async(event)=>{
         event.preventDefault();
         try {
-        const response=   await signInAuthUserWithEmailAndPassword(email, password);
-        console.log(response);
+        await signInAuthUserWithEmailAndPassword(email, password);
+        //setCurrentUser(user);
         resetFormFields();
         } catch(error){
             switch(error.code){
@@ -42,8 +49,8 @@ const SignInForm= ()=>{
 
     const googleSignIn = async()=>{
         try{
-            const {user} = await signInWithGooglePopup();
-            await createUserDocumentFromAuth(user)}
+            await signInWithGooglePopup();
+           }
         catch(error){
             if(error.code === 'auth/popup-closed-by-user'){
                 alert('No Sign In with Google was made')
