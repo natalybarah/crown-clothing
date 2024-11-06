@@ -5,17 +5,16 @@ import Home from './routes/home/home.component'
 import Navigation from './routes/navigation/navigation.component'
 import Authentication from './routes/authentication/authentication.component'
 import {UserProvider} from './contexts/user.context';
-
+import {ProductsProvider} from './contexts/products.context';
+import Shop from './routes/shop/shop.component';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { CartContextProvider } from './contexts/cart.context';
 
 
-const Shop=()=>{
-  return <h1>Hi I am the Shop</h1>
-};
 
 const router = createBrowserRouter([
   {
@@ -46,7 +45,11 @@ root.render(
 
   <React.StrictMode>
       <UserProvider>
-       <RouterProvider router={router} />
+        <ProductsProvider> 
+          <CartContextProvider>
+            <RouterProvider router={router} />
+         </CartContextProvider>
+        </ProductsProvider> 
      </UserProvider>
   </React.StrictMode>
 );
@@ -55,3 +58,5 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+//the user provider cant have access to its children the product provider can fetch and grab the data from the user provider
