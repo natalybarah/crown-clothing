@@ -7,6 +7,7 @@ import Authentication from './routes/authentication/authentication.component'
 import {UserProvider} from './contexts/user.context';
 import {ProductsProvider} from './contexts/products.context';
 import Shop from './routes/shop/shop.component';
+import Checkout from './routes/checkout/checkout.component'
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: 'auth',
         element: <Authentication/>
+      },
+      {
+        path: 'checkout',
+        element: <Checkout/>
       }
       
     ]
