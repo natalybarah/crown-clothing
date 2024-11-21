@@ -5,7 +5,7 @@ import Home from './routes/home/home.component'
 import Navigation from './routes/navigation/navigation.component'
 import Authentication from './routes/authentication/authentication.component'
 import {UserProvider} from './contexts/user.context';
-import {ProductsProvider} from './contexts/products.context';
+import {CategoriesProvider} from './contexts/categories.context';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component'
 import reportWebVitals from './reportWebVitals';
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         element: <Home/>
       },
       {
-        path:'shop',
+        path:'shop/*',
         element: <Shop/>
       },
       {
@@ -50,11 +50,11 @@ root.render(
 
   <React.StrictMode>
       <UserProvider>
-        <ProductsProvider> 
+        <CategoriesProvider> 
           <CartContextProvider>
             <RouterProvider router={router} />
          </CartContextProvider>
-        </ProductsProvider> 
+        </CategoriesProvider> 
      </UserProvider>
   </React.StrictMode>
 );

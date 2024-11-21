@@ -28,9 +28,6 @@ const removeCartItem = (cartItemToRemove, cartItems) => {
 
 const clearCartItem = (cartItemToClear, cartItems) => cartItems.filter((cartItem)=> cartItem.id !== cartItemToClear.id)
 
-
-
-
 export const CartContext = createContext({
     isOpen: false,
     setIsOpen: ()=>{},
@@ -63,8 +60,6 @@ export const CartContextProvider= ({children})=>{
     const clearItemFromCart= (cartItemToClear)=>{
         setCartItems(clearCartItem(cartItemToClear, cartItems))
     }
-
-   
 
     useEffect(()=>{
        const newCartCount= cartItems.reduce((accum, item)=>{ return accum + item.quantity}, 0);

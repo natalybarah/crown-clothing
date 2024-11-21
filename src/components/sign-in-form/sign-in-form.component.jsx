@@ -1,10 +1,8 @@
 import { useState} from "react";
 import {signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
 import FormInput from '../form-input/form-input.component'
-import '../sign-in-form/sign-in-form.styles.scss';
-import Button from '../button/button.component';
-//import {UserContext} from '../../contexts/user.context';
-
+import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component';
+import { SignInContainer, ButtonsContainer} from "./sign-in-form.styles";
 
 const defaultFormFields={
     email: '',
@@ -14,8 +12,6 @@ const SignInForm= ()=>{
 
     const [formFields, setFormFields]= useState(defaultFormFields);
     const {email, password}= formFields;
-    //  console.log(formFields);
-    
     /*  
         We get rid of this set current user because we don't need it anymore, as we use the on auth state listener to 
         centralize everything in user context
@@ -63,24 +59,20 @@ const SignInForm= ()=>{
         const {value, name} = event.target;
         setFormFields({...formFields, [name]: value})
     }
-
-
     return(
-        <div>
-                 
-
+        <SignInContainer>
             <h2>Already have an account ? </h2> 
             <span>Sign in with your Email and Password</span>
-            <form className='sign-in-container' onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <FormInput label='Email' type='email' name='email' required onChange={handleChange} value={email} />
                 <FormInput label='Password' type='password' name='password' required onChange={handleChange} value={password} />
-                <div className='buttons-container'>
-                    <Button  buttonType='' type='submit'>Sign In</Button>
-                    <Button type='button' onClick={googleSignIn} buttonType='google'>Google Sign In</Button>  
-                </div>
+                <ButtonsContainer>
+                    <Button type='submit'>Sign In</Button>
+                    <Button type='button' onClick={googleSignIn} buttonType={BUTTON_TYPE_CLASSES.google}>Google Sign In</Button>  
+                </ButtonsContainer>
             </form>
            
-        </div>
+        </SignInContainer>
     )
 }
 

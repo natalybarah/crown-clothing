@@ -8,15 +8,10 @@ export const UserContext= createContext({
 
 });
 export const UserProvider = ({children}) => {
-    /* We know that we want to store our user object, 
-    so what we can do because this is a component is to use all of our hooks 
-    that allow us to store things, so we import useState */
+
     const [currentUser, setCurrentUser] = useState(null);
 
-    /* Now we want to generate the value that we are going to pass, we want it
-    to be an object */
     const value= {currentUser, setCurrentUser}
-    //signOutUser();
 
     useEffect(()=>{
         const unsubscribe= onAuthStateChangedListener(
@@ -35,16 +30,9 @@ export const UserProvider = ({children}) => {
         );
         return unsubscribe;
     }, []) //whenever the component umounts, unsubscribe
-//this use effects gets fired because if for example we sign out, then the auth changes 
-//the moment that this listener mounts it will check the auth state automatically when you
-//initialize the listener and will run tye call back once, any future runs of this call bakc
-//is gonna be tied directly to the actual auth states changing 
 
 
-//we render the children. the children are the one that need access to the values. 
     return <UserContext.Provider value={value} >{children}</UserContext.Provider>
-    /* so what happens here is that we are letting the children component
-    have access to any of the values stored inside of our useState*/
 };
 
 
