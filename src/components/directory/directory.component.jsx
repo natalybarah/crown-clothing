@@ -26,13 +26,13 @@ const Directory= () => {
     {
       id: 4,
       title: 'Mens',
-      imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
+      imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
       route: 'shop/mens'
     },
     {
       id: 5,
       title: 'Womens',
-      imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
+      imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
       route: 'shop/womens'
     }
   ]

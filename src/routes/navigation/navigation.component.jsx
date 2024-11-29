@@ -29,7 +29,8 @@ const Navigation= () =>{
                 : (<NavLink  to='/auth'>SIGN IN</NavLink>)
             } 
             <CartIcon /> 
-            {isOpen && <CartDropdown/>}
+            {isOpen && <CartDropdown/>
+            }
 
         </NavLinks>
         
