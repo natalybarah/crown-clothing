@@ -1,8 +1,10 @@
 import { useState} from "react";
-import {signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from "../../utils/firebase/firebase.utils";
 import FormInput from '../form-input/form-input.component'
 import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component';
 import { SignInContainer, ButtonsContainer} from "./sign-in-form.styles";
+import {useDispatch} from 'react-redux'
+import {emailSignInStart, googleSignInStart} from '../../store/user/user.action';
+
 
 const defaultFormFields={
     email: '',
@@ -10,6 +12,7 @@ const defaultFormFields={
 }
 const SignInForm= ()=>{
 
+    const dispatch= useDispatch()
     const [formFields, setFormFields]= useState(defaultFormFields);
     const {email, password}= formFields;
     /*  
@@ -24,35 +27,16 @@ const SignInForm= ()=>{
     
     const handleSubmit= async(event)=>{
         event.preventDefault();
-        try {
-        await signInAuthUserWithEmailAndPassword(email, password);
-        //setCurrentUser(user);
-        resetFormFields();
+        try{
+            dispatch(emailSignInStart(email, password));
+            resetFormFields()
         } catch(error){
-            switch(error.code){
-                case 'auth/wrong-password':
-                    alert('Wrong password for email');
-                    break;
-                case 'auth/user-not-found':
-                    alert('No email associated to an account');
-                    break
-                default:
-                    console.log(error)
-            }
-                
+            console.log('user sign in failed', error)
         }
     }
 
-    const googleSignIn = async()=>{
-        try{
-            await signInWithGooglePopup();
-           }
-        catch(error){
-            if(error.code === 'auth/popup-closed-by-user'){
-                alert('No Sign In with Google was made')
-            }
-        }
-
+    const googleSignIn = async()=> {
+        dispatch(googleSignInStart());
     }
 
     const handleChange= (event)=>{
@@ -71,7 +55,6 @@ const SignInForm= ()=>{
                     <Button type='button' onClick={googleSignIn} buttonType={BUTTON_TYPE_CLASSES.google}>Google Sign In</Button>  
                 </ButtonsContainer>
             </form>
-           
         </SignInContainer>
     )
 }

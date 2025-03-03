@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
+import {useDispatch} from 'react-redux';
+import {signUpUserStart} from '../../store/user/user.action';
 import FormInput from '../form-input/form-input.component'
 import Button from '../button/button.component';
 import { SignUpContainer } from "./sign-up-form.styles";;
@@ -12,10 +13,10 @@ const defaultFormFields={
     confirmPassword: ''
 }
 const SignUpForm= ()=>{
-
+    const dispatch= useDispatch();
     const [formFields, setFormFields]= useState(defaultFormFields);
     const {displayName, email, password, confirmPassword}= formFields;
-//    console.log('hit');
+
 
     const resetFormFields=()=>{
         setFormFields(defaultFormFields);
@@ -26,22 +27,15 @@ const SignUpForm= ()=>{
         if (password !== confirmPassword) {
             return;
         }
-        try {
-            const {user}= await createAuthUserWithEmailAndPassword(email, password);
-            console.log(user); 
-            
-            /* So now, when I have a user sign up (a new user), I am also going to have
-            this set User in my userContext. */
-           // setCurrentUser(user);
-            await createUserDocumentFromAuth(user, {displayName});
-            resetFormFields();
-            
+        try{
+            dispatch(signUpUserStart(email, password, displayName));
+            resetFormFields()
         } catch(error){
             if(error.code === 'auth/email-already-in-use') {
                 alert(`Oops, you can't Sign in. This email is already in use.`)
             } else {
                 console.log('encounter an issue when creating an user', error);
-            }
+        }
         
         }
     }
@@ -64,7 +58,9 @@ const SignUpForm= ()=>{
                 <FormInput label='Password' type='password' name='password' required onChange={handleChange} value={password} />
 
                 <FormInput label='Confirm Password' type='password' name='confirmPassword' required onChange={handleChange} value={confirmPassword} />
+                
                 <Button  type='submit'>Sign-up</Button>
+
             </form>
            
         </SignUpContainer>

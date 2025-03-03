@@ -25,13 +25,13 @@ const Directory= () => {
     },
     {
       id: 4,
-      title: 'Mens',
+      title: 'Men',
       imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
       route: 'shop/mens'
     },
     {
       id: 5,
-      title: 'Womens',
+      title: 'Women',
       imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
       route: 'shop/womens'
     }
@@ -44,7 +44,5 @@ const Directory= () => {
     </DirectoryContainer>
   )
 }
-
-
 
 export default Directory;

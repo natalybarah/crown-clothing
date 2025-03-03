@@ -1,25 +1,28 @@
 import React from 'react';
+import {useEffect} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.scss';
 import Home from './routes/home/home.component'
 import Navigation from './routes/navigation/navigation.component'
 import Authentication from './routes/authentication/authentication.component'
-import {UserProvider} from './contexts/user.context';
-import {CategoriesProvider} from './contexts/categories.context';
 import Shop from './routes/shop/shop.component';
 import Checkout from './routes/checkout/checkout.component'
+import ModalPopupPay from './components/modals/modal-popup-pay';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { CartContextProvider } from './contexts/cart.context';
-
-
+import {Provider} from 'react-redux'
+import { store, persistor } from './store/store';
+import { checkUserSession } from './store/user/user.action';
+import {useDispatch} from 'react-redux'
+//import {PersistGate} from 'redux-persist/integration/react';
+import {Elements} from '@stripe/react-stripe-js';
+import { stripePromise } from './utils/stripe/stripe-utils';
 
 const router = createBrowserRouter([
-  {
-    
+  { 
     path: "/",
     element: <Navigation />,
     children: [
@@ -37,26 +40,43 @@ const router = createBrowserRouter([
       },
       {
         path: 'checkout',
-        element: <Checkout/>
-      }
-      
+        element: <Checkout/>,
+        children: [
+          {
+            path: 'popuppay',
+            element: <ModalPopupPay/>
+          }
+        ]
+      },
     ]
   }
-
 ]);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
 
-  <React.StrictMode>
-      <UserProvider>
-        <CategoriesProvider> 
-          <CartContextProvider>
-            <RouterProvider router={router} />
-         </CartContextProvider>
-        </CategoriesProvider> 
-     </UserProvider>
-  </React.StrictMode>
+const App= ()=>{
+  const dispatch= useDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserSession());
+  }, []);
+
+  return <RouterProvider router={router} />
+}
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+    <React.StrictMode>
+      <Provider store={store}>  
+        {/*<PersistGate loading={null} persistor={persistor}>*/}
+          <Elements stripe={stripePromise}>
+            <App>
+            </App>  
+          </Elements>
+        {/*</PersistGate>*/}    
+      </Provider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
@@ -64,4 +84,3 @@ root.render(
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
 
-//the user provider cant have access to its children the product provider can fetch and grab the data from the user provider
