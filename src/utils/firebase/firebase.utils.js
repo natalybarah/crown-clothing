@@ -80,8 +80,6 @@ export const createUserDocumentFromAuth= async(userAuth, additionalInformation={
 
   const userDocRef= doc(db, 'users', userAuth.uid);
 
-  // console.log(userDocRef)
-
   const userSnapshot= await getDoc(userDocRef)
   /* console.log(userSnapshot)
      console.log(userSnapshot.exists())
@@ -112,8 +110,6 @@ export const createAuthUserWithEmailAndPassword= async(email, password)=>{
   if(!email || !password) return;
 
   return await createUserWithEmailAndPassword(auth, email, password);
-  //algo para poder crear el documento de referencia 
-
 }
 
 export const signInAuthUserWithEmailAndPassword= async(email, password)=>{
@@ -121,13 +117,6 @@ export const signInAuthUserWithEmailAndPassword= async(email, password)=>{
   return await signInWithEmailAndPassword(auth, email, password);
 
 }
-
-
-// if user data does not exist 
-// create / set the document with the data from userAuth in my collection
-
-// if user data exists 
-//return userDocRef
 
 export const signOutUser = async () => {
   //if user is signed in, then sign ougt
@@ -149,7 +138,6 @@ export const getCurrentUser= ()=>{
         resolve(userAuth);
       }, 
       reject
-
     )
     })
   }

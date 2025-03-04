@@ -59,6 +59,11 @@ export function* signUp({payload: {email, password, displayName}}){
         yield put(signUpSuccess(user, {displayName}))
     } catch(error){
         yield put(signUpFailure(error))
+        if(error.code === 'auth/email-already-in-use'){
+            alert(`We're sorry. There is another account associated with this Email`)
+        } else {
+            console.log('there has been an issue creating a new user')
+        }
     }
 }
 

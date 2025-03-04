@@ -7,7 +7,6 @@ export const PaymentFormContainer= styled.div`
     align-items: center;
     flex-direction: column;
     justify-content:center;
-    
 `
 export const FormContainer= styled.form`
     height: 100px;

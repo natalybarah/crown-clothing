@@ -19,25 +19,25 @@ const Navigation= () =>{
     dispatch(signOutStart())
    }
     return (
-    <Fragment>
-      <NavigationContainer >
-        <LogoContainer  to='/'>
-            <CrownLogo/>
-        </LogoContainer>
-        <NavLinks>
-            <NavLink to='/shop'>SHOP</NavLink>
-            { 
-              currentUser ? (
-                <NavLink as='span' onClick={signOutHandler}>SIGN OUT</NavLink>
-              )
-                : (<NavLink  to='/auth'>SIGN IN</NavLink>)
-            } 
-            <CartIcon /> 
-            { isOpen && <CartDropdown/> }
-        </NavLinks>
-      </NavigationContainer>
-      <Outlet/>
-    </Fragment>
+      <Fragment>
+        <NavigationContainer >
+          <LogoContainer  to='/'>
+              <CrownLogo/>
+          </LogoContainer>
+          <NavLinks>
+              <NavLink to='/shop'>SHOP</NavLink>
+              { 
+                currentUser ? (
+                  <NavLink as='span' onClick={signOutHandler}>SIGN OUT</NavLink>
+                )
+                  : (<NavLink  to='/auth'>SIGN IN</NavLink>)
+              } 
+              <CartIcon /> 
+              { isOpen && <CartDropdown/> }
+          </NavLinks>
+        </NavigationContainer>
+        <Outlet/>
+      </Fragment>
     )
   }
 

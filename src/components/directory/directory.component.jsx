@@ -27,13 +27,13 @@ const Directory= () => {
       id: 4,
       title: 'Men',
       imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
-      route: 'shop/mens'
+      route: 'shop/men'
     },
     {
       id: 5,
       title: 'Women',
       imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
-      route: 'shop/womens'
+      route: 'shop/women'
     }
   ]
   return(

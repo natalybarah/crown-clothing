@@ -11,7 +11,6 @@ export function* fetchCategoriesAsync(){
     } catch (error) {
         yield put(fetchCategoriesFailed(error))
     }
-
 }
 
 export function* onFetchCategories(){

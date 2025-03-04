@@ -10,7 +10,6 @@ const CartItem = ({cartItem}) =>{
                 <Name as='span'>{name}</Name>
                 <span>{quantity} x ${price}</span>
             </ItemDetails>
-            
         </CartItemContainer>
     )
 }

@@ -11,7 +11,8 @@ const PaymentForm= ()=>{
     const elements= useElements();
     const amount= useSelector(selectCartTotal);
     const [isPaymentLoading, setIsPaymentLoading] = useState(false);
-    const currentUser= useSelector(selectCurrentUser)
+    const currentUser= useSelector(selectCurrentUser);
+    
     const handleSubmit= async (event) =>{
         event.preventDefault();
         if (!stripe || !elements){
