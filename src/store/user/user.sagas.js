@@ -70,6 +70,7 @@ export function* signUp({payload: {email, password, displayName}}){
 export function* signInAfterSignUp({ payload: { user, additionalInformation } }) {
     yield call(getSnapshotFromUserAuth, user, additionalInformation);
 }
+
 export function* onCheckInUserSession(){
     yield takeLatest(USER_ACTION_TYPES.CHECK_USER_SESSION, isUserAuthenticated  )
 }
