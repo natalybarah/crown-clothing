@@ -17,7 +17,7 @@ export type EmailSignInStart= ActionWithPayload<USER_ACTION_TYPES.EMAIL_SIGN_IN_
 export const emailSignInStart= withMatcher((email: string, password: string): EmailSignInStart=> createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, {email, password})); 
 
 export type SignInSucess= ActionWithPayload<USER_ACTION_TYPES.SIGN_IN_SUCCESS, UserData>
-export const signInSucess= withMatcher((user: UserData): SignInSucess=> createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, user));
+export const signInSucess= withMatcher((user: UserData & {id: string} ): SignInSucess=> createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, user));
 
 export type SignInFailure = ActionWithPayload<USER_ACTION_TYPES.SIGN_IN_FAILURE, Error>
 export const signInFailure= withMatcher((error: Error): SignInFailure => createAction(USER_ACTION_TYPES.SIGN_IN_FAILURE, error));

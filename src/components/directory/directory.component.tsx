@@ -1,14 +1,20 @@
-
+import { Key} from "react";
 import DirectoryItem from "../directory-item/directory-item.component";
-import {DirectoryContainer} from '../directory/directory.styles';
+import {DirectoryContainer} from './directory.styles';
 
-const Directory= () => {
+export type DirectoryCategory= {
+  id: Key,
+  title: string,
+  imageUrl: string,
+  route: string
+}
 
-  const categories=[
+
+  const categories: DirectoryCategory[]=[
     {
       id: 1,
       title: 'Hats',
-      "imageUrl": "https://i.ibb.co/cvpntL1/hats.png",
+      imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
       route: 'shop/hats'
     },
     {
@@ -36,6 +42,9 @@ const Directory= () => {
       route: 'shop/women'
     }
   ]
+
+
+const Directory= ()=> {
   return(
     <DirectoryContainer>
       {categories.map((category)=>

@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+
+import styled, {css} from 'styled-components';
 import {Link} from 'react-router-dom';
 
 export const NavigationContainer= styled.div`
@@ -20,8 +21,15 @@ export const NavLinks= styled.div`
     align-items: center; 
     justify-content: flex-end; 
 `
-export const NavLink= styled(Link)`
-    padding: 10px 15px; 
-    cursor: pointer; 
+const navLinkStyles = css`
+  padding: 10px 15px;
+  cursor: pointer;
+`;
 
-`
+export const NavLink = styled(Link)`
+  ${navLinkStyles}
+`;
+
+export const NavLinkSpan = styled.span`
+  ${navLinkStyles}
+`;

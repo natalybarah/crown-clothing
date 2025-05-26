@@ -6,9 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsPopupOpen } from "../../store/cart/cart.action";
 import { selectIsPopupOpen } from "../../store/cart/cart.selector";
 
+
+
+
 const ModalPopupPay= () => {
 
-    const payHowRef= useRef(null);
+    const payHowRef= useRef<HTMLDivElement>(null)
     const dispatch= useDispatch();
     const isPopupOpen= useSelector(selectIsPopupOpen)
     
@@ -19,7 +22,7 @@ const ModalPopupPay= () => {
     useClickOutsideHook(payHowRef, ()=>{dispatch(setIsPopupOpen(false))})
     return(
     
-            <PayPopupContainer ref={payHowRef} isPopupOpen={isPopupOpen}>
+            <PayPopupContainer ref={payHowRef} isPopUpOpen={isPopupOpen}>
             <h3>How do you want to complete your purchase?</h3>
                 <PayPopupOptions>
                     <NavLinkPopup onClick={onRedirectionClick} to='/auth'>Join now</NavLinkPopup>

@@ -24,7 +24,7 @@ const removeCartItem = (cartItemToRemove: CartItem, cartItems: CartItem[]) => {
  
 const clearCartItem = (cartItemToClear: CartItem, cartItems: CartItem[]) => cartItems.filter((cartItem)=> cartItem.id !== cartItemToClear.id)
  
-export const addItemToCart= (productToAdd: CartItem, cartItems: CartItem[])=> {
+export const addItemToCart= (productToAdd: CategoryItem, cartItems: CartItem[])=> {
     const newCartItems= addCartItem(productToAdd, cartItems) 
     return setCartItems(newCartItems);
 };

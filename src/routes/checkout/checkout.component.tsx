@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsPopupOpen } from '../../store/cart/cart.action';
-import {CheckoutContainer, CheckoutHeader, HeaderBlock, Total, ContinueButton} from '../checkout/checkout.styles';
+import {CheckoutContainer, CheckoutHeader, HeaderBlock, Total, ContinueButton} from './checkout.styles';
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import {selectCartItems, selectCartTotal, selectIsPopupOpen} from '../../store/cart/cart.selector'
 import { selectCurrentUser } from '../../store/user/select.user';

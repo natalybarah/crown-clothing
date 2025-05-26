@@ -10,7 +10,10 @@ const riseAnimation= keyframes`
     }
 
 `
-export const PayPopupContainer = styled.div`
+type PayPopupContainerProps={
+    isPopUpOpen: boolean
+}
+export const PayPopupContainer = styled.div<PayPopupContainerProps>`
     display: flex;
     flex-direction: column;
     justify-content: center;

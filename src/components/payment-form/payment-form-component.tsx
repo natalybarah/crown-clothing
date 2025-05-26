@@ -4,7 +4,10 @@ import { PaymentFormContainer, FormContainer, PaymentButton } from "./payment-fo
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/select.user";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
+import { StripeCardElement } from "@stripe/stripe-js";
+
+const ifValidCardElement= (card: StripeCardElement | null): card is StripeCardElement => card !== null;
 
 const PaymentForm= ()=>{
     const stripe= useStripe();
@@ -13,7 +16,7 @@ const PaymentForm= ()=>{
     const [isPaymentLoading, setIsPaymentLoading] = useState(false);
     const currentUser= useSelector(selectCurrentUser);
     
-    const handleSubmit= async (event) =>{
+    const handleSubmit= async (event: FormEvent<HTMLFormElement>) =>{
         event.preventDefault();
         if (!stripe || !elements){
             return;
@@ -30,11 +33,14 @@ const PaymentForm= ()=>{
     .then(resp=>resp.json())
 
     const {paymentIntent: {client_secret}}= result
+    const cardDetails= elements.getElement(CardElement);
+
+    if(!ifValidCardElement(cardDetails)) return;
 
     const confirmResult= await stripe.confirmCardPayment(
         client_secret,{
         payment_method:{
-            card: elements.getElement(CardElement),
+            card: cardDetails,
             billing_details:{
                 name: currentUser ? currentUser.displayName : 'Guest'
             }
@@ -43,10 +49,10 @@ const PaymentForm= ()=>{
 
     setIsPaymentLoading(false);
 
-    if(confirmResult.paymentIntent.status === 'succeeded'){
+    if( confirmResult.paymentIntent && confirmResult.paymentIntent.status === 'succeeded'){
         alert('sucessful payment!!!')
     } else if (confirmResult.error){
-        alert(confirmResult.error, 'there has been an error with your payment')
+        alert(confirmResult.error + 'there has been an error with your payment')
     }
     }
     
