@@ -1,13 +1,8 @@
-import React from 'react';
-import {useEffect} from 'react';
+import React, {lazy, Suspense} from 'react';
+import {useEffect, Fragment} from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.scss';
-import Home from './routes/home/home.component'
+import { GlobalStyles } from './global.styles';
 import Navigation from './routes/navigation/navigation.component'
-import Authentication from './routes/authentication/authentication.component'
-import Shop from './routes/shop/shop.component';
-import Checkout from './routes/checkout/checkout.component'
-import ModalPopupPay from './components/modals/modal-popup-pay';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -19,7 +14,15 @@ import { checkUserSession } from './store/user/user.action';
 import {useDispatch} from 'react-redux'
 //import {PersistGate} from 'redux-persist/integration/react';
 import {Elements} from '@stripe/react-stripe-js';
+import Spinner from './components/spinner/spinner.component';
 import { stripePromise } from './utils/stripe/stripe-utils';
+
+
+const Home= lazy(()=>import('./routes/home/home.component'));
+const Authentication= lazy(()=> import('./routes/authentication/authentication.component'));
+const Checkout= lazy(()=> import('./routes/checkout/checkout.component'));
+const ModalPopupPay= lazy(()=> import('./components/modals/modal-popup-pay'));
+const Shop= lazy(()=>import('./routes/shop/shop.component'));
 
 const router = createBrowserRouter([
   { 
@@ -28,23 +31,33 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home/>
+        element:  <Suspense fallback={<Spinner></Spinner>}>
+                    <Home/>
+                  </Suspense>
       },
       {
         path:'shop/*',
-        element: <Shop/>
+        element: <Suspense fallback={<Spinner></Spinner>}>
+                    <Shop/>
+                </Suspense>
       },
       {
         path: 'auth',
-        element: <Authentication/>
+        element:  <Suspense fallback={<Spinner></Spinner>}>
+                    <Authentication/>
+                  </Suspense> 
       },
       {
         path: 'checkout',
-        element: <Checkout/>,
+        element:  <Suspense fallback={<Spinner></Spinner>}>
+                    <Checkout/>
+                  </Suspense>,
         children: [
           {
             path: 'popuppay',
-            element: <ModalPopupPay/>
+            element:  <Suspense fallback={<Spinner></Spinner>}>
+                        <ModalPopupPay/>
+                      </Suspense> 
           }
         ]
       },
@@ -60,7 +73,12 @@ const App= ()=>{
     dispatch(checkUserSession());
   }, []);
 
-  return <RouterProvider router={router} />
+  return(  
+    <Fragment>
+       <GlobalStyles></GlobalStyles>
+       <RouterProvider router={router} />
+    </Fragment>
+  )
 }
 
 
