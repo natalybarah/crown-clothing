@@ -8,7 +8,7 @@ const Modal= () =>{
         <Portal>
            <ModalRoot className='modal-root'>
                 <ModalMask className='modal-mask'>
-                   <PayHow></PayHow> 
+                   <PayHow ></PayHow> 
                 </ModalMask>
                 </ModalRoot>
         </Portal>

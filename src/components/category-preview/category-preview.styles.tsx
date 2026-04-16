@@ -16,18 +16,23 @@ export const Title = styled(Link)`
     cursor: pointer; 
 `
 export const Preview= styled.div`
+
     display: grid; 
     grid-template-columns: repeat(4, 1fr); 
     column-gap: 20px;
 
     @media screen and (max-width: 800px){
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 15px;
-        grid-row-gap: 25px;
+
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 15px;
+        row-gap: 25px;
     }
 
     @media screen and (max-width: 400px){
         grid-template-columns: 1fr;
-        grid-column-row: 25px;
+        row-gap: 25px;
     }
+`
+export const ExtraWord= styled.h1`
+    color: red
 `

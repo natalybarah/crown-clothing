@@ -43,7 +43,10 @@ const Checkout = () => {
                 }
                 <Total>Total: ${cartTotal} </Total>
                 { currentUser ? <PaymentForm></PaymentForm> : <ContinueButton  onClick={popupHandler} buttonType={BUTTON_TYPE_CLASSES.base}>Continue</ContinueButton> }
-                {isPopupOpen && <Modal/>   }
+                {isPopupOpen &&   <Modal  /> 
+              
+                
+                }
             </CheckoutContainer> 
     )
 }

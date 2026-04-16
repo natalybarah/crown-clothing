@@ -56,6 +56,7 @@ export const PayPopupOptions= styled.div`
 export const NavLinkPopup= styled(NavLink)`
     color: black;
     font-size: 20px;
+    text-align: left;
     &:hover {
         color: #2E8B57;
     }
