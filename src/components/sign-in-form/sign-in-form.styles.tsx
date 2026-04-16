@@ -7,9 +7,21 @@ export const SignInContainer = styled.div`
         h2{
             margin: 10px 0;
         }
+    @media screen and (max-width:400px){
+        width: 80vw;
+    }
 `
 export const ButtonsContainer= styled.div`
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
+    
+    @media screen and (max-width:400px){
+        button{
+            min-width: 0px;
+            width: 140px;
+            padding: 0;
+        
+        }
+    }
 `
 

@@ -11,6 +11,7 @@ const CategoryPreview: FC<CategoryPreviewProps>= ({title, products}) => {
 
     return(
         <CategoryPreviewContainer>
+            <h1> HELLO THERE</h1>
             <h2>
                 <Title to={title}>
                 {title.toUpperCase()}   

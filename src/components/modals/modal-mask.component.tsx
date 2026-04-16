@@ -6,11 +6,11 @@ const Modal= () =>{
 
     return(
         <Portal>
-            <ModalRoot className='modal-root'>
+           <ModalRoot className='modal-root'>
                 <ModalMask className='modal-mask'>
                    <PayHow></PayHow> 
                 </ModalMask>
-            </ModalRoot>
+                </ModalRoot>
         </Portal>
     )
 }
